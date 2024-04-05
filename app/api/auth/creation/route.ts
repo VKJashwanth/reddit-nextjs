@@ -9,7 +9,7 @@ import { generateUsername } from "unique-username-generator";
 
 export async function GET() {
     NoStore()
-    const {getUser} = getKindeServerSession()
+    const { getUser } = getKindeServerSession()
     const user = await getUser()
 
     if (!user || user === null || !user.id) {
@@ -35,5 +35,5 @@ export async function GET() {
         })
     }
 
-    return NextResponse.redirect("http://localhost:3000/")
+    return NextResponse.redirect(process.env.NODE_ENV === "development" ? "http://localhost:3000/" : "https://reddit777.vercel.app/")
 }
