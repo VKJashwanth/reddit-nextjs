@@ -20,27 +20,23 @@ export async function updateUsername(prevState: any, formData: FormData) {
   try {
     await prisma.user.update({
       where: {
-        id: user.id,
+        id : user.id,
       },
       data: {
         userName: username,
-      },
-    });
-
+      }
+    })
     return {
-      message: "Succesfully Updated name",
+      message: "Username updated successfully!",
       status: "green",
-    };
+    }
   } catch (e) {
-    if (e instanceof Prisma.PrismaClientKnownRequestError) {
-      if (e.code === "P2002") {
-        return {
-          message: "This username is alredy used",
-          status: "error",
-        };
+    if ((e as Prisma.PrismaClientKnownRequestError).code === "P2002") {
+      return {
+        message: "This username is already used",
+        status: "error",
       }
     }
-
     throw e;
   }
 }
